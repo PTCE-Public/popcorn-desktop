@@ -2069,7 +2069,7 @@ body,
   height: 28px;
   position: absolute;
   top: -6px;
-  left: calc(50% + 52px);
+  left: calc(50% + 64px);
   display: none;
 }
 .events.img-newyear {
