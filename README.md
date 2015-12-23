@@ -1,10 +1,10 @@
-# [Popcorn Time CE](https://github.com/PopcornTimeCE/desktop)
+# [Popcorn Time CE](https://github.com/PTCE-Public/popcorn-desktop/)
 
 Allow anyone to easily watch their favorite movies, shows, and anime.
 
 ![Popcorn Time](src/app/images/icon.png)
 
-Visit the project's website at <http://popcorntime.ml>.
+Visit the project's website at <https://popcorntimece.tk/>.
 
 This project would absolutely **not** be possible without the original developer's hard work into making Popcorn Time what it is today. All credit should go to them, we're just trying to help the community :)
 
@@ -20,7 +20,7 @@ If you're comfortable getting up and running from a `git clone`, this method is 
 
 If you clone the GitLab repository, you will need to build a number of assets using grunt.
 
-The [master](https://github.com/PopcornTimeCE/desktop/tree/master) branch which contains the latest release.
+The [master](https://github.com/PTCE-Public/popcorn-desktop/tree/master/) branch which contains the latest release.
 
 #### Quickstart:
 
@@ -40,8 +40,8 @@ The [master](https://github.com/PopcornTimeCE/desktop/tree/master) branch which 
 
 Keep track of Popcorn Time CE development and community activity.
 
-* Join in discussions on the [Popcorn Time CE Forum](http://discuss.popcorntime.ml)
-* Visit the [website](http://popcorntime.ml)
+* Join in discussions on the [Popcorn Time CE Forum](https://discuss.popcorntimece.tk/)
+* Visit the [website](https://popcorntimece.tk/)
 
 
 ## Versioning
@@ -76,6 +76,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 ***
 
-If you want to contact us : [hello@popcorntime.ml](mailto:hello@popcorntime.ml) or [use the form](http://popcorntime.ml/contact/) on our website.
+If you want to contact us : [hello@popcorntimece.tk](mailto:hello@popcorntimece.tk) or [use the form](https://popcorntimece.tk/contact/) on our website.
  
 Copyright (c) 2015 Popcorn Time CE - Released under the [GPL v3 license](LICENSE.txt).
