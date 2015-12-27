@@ -1,12 +1,12 @@
 (function (App) {
     'use strict';
 
-    var torrentHealth = require('torrent-tracker-health');
+    var torrentHealth = require('torrent-tracker-health-ce');
     var cancelTorrentHealth = function () {};
     var torrentHealthRestarted = null;
 
     var _this, bookmarked;
-    var ShowDetail = Backbone.Marionette.ItemView.extend({
+    App.View.ShowDetail = Backbone.Marionette.ItemView.extend({
         template: '#show-detail-tpl',
         className: 'shows-container-contain',
 
@@ -886,6 +886,5 @@
         }
 
     });
-
-    App.View.ShowDetail = ShowDetail;
+	
 })(window.App);

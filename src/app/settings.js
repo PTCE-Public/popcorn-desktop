@@ -198,18 +198,18 @@ var AdvSettings = {
         }
 
         switch (process.platform) {
-        case 'darwin':
-            AdvSettings.set('os', 'mac');
-            break;
-        case 'win32':
-            AdvSettings.set('os', 'windows');
-            break;
-        case 'linux':
-            AdvSettings.set('os', 'linux');
-            break;
-        default:
-            AdvSettings.set('os', 'unknown');
-            break;
+			case 'darwin':
+				AdvSettings.set('os', 'mac');
+				break;
+			case 'win32':
+				AdvSettings.set('os', 'windows');
+				break;
+			case 'linux':
+				AdvSettings.set('os', 'linux');
+				break;
+			default:
+				AdvSettings.set('os', 'unknown');
+				break;
         }
 
         return Q();
@@ -355,5 +355,5 @@ var AdvSettings = {
         }
         AdvSettings.set('version', currentVersion);
         AdvSettings.set('releaseName', gui.App.manifest.releaseName);
-    },
+    }
 };
