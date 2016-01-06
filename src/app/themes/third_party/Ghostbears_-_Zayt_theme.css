@@ -1595,7 +1595,7 @@ body,
 }
 .icon-begin {
   display: block;
-  margin: -7px auto;
+  margin: 0px auto;
   height: calc(58%);
   max-height: 256px;
 }

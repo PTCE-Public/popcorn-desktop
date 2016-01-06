@@ -39,19 +39,19 @@
                 watched, cached, that = this;
 
             switch (itemtype) {
-            case 'bookmarkedshow':
-                watched = App.watchedShows.indexOf(imdb) !== -1;
-                this.model.set('image', App.Trakt.resizeImage(img, 'thumb'));
-                break;
-            case 'show':
-                watched = App.watchedShows.indexOf(imdb) !== -1;
-                images.poster = App.Trakt.resizeImage(img, 'thumb');
-                break;
-            case 'bookmarkedmovie':
-            case 'movie':
-                watched = App.watchedMovies.indexOf(imdb) !== -1;
-                this.model.set('image', img);
-                break;
+				case 'bookmarkedshow':
+					watched = App.watchedShows.indexOf(imdb) !== -1;
+					this.model.set('image', App.Trakt.resizeImage(img, 'thumb'));
+					break;
+				case 'show':
+					watched = App.watchedShows.indexOf(imdb) !== -1;
+					images.poster = App.Trakt.resizeImage(img, 'thumb');
+					break;
+				case 'bookmarkedmovie':
+				case 'movie':
+					watched = App.watchedMovies.indexOf(imdb) !== -1;
+					this.model.set('image', img);
+					break;
             }
             this.model.set('watched', watched);
             this.model.set('bookmarked', bookmarked);
@@ -86,7 +86,6 @@
             if (itemtype === 'show' || itemtype === 'bookmarkedshow' || itemtype === 'historyshow') {
                 this.ui.watchedIcon.remove();
             }
-
         },
 
         onDestroy: function () {
@@ -106,54 +105,53 @@
             var coverUrl;
             var itemtype = this.model.get('type');
             switch (itemtype) {
-            case 'bookmarkedmovie':
-                if (this.model.get('watched')) {
-                    this.ui.watchedIcon.addClass('selected');
-                    switch (Settings.watchedCovers) {
-                    case 'fade':
-                    case 'hide':
-                        this.$el.addClass('watched');
-                        break;
-                    }
-                }
-                coverUrl = this.model.get('image');
-                this.ui.bookmarkIcon.addClass('selected');
-                break;
-            case 'bookmarkedshow':
-                coverUrl = this.model.get('image');
-                this.ui.bookmarkIcon.addClass('selected');
-                break;
-            case 'movie':
-                coverUrl = this.model.get('image');
+				case 'bookmarkedmovie':
+					if (this.model.get('watched')) {
+						this.ui.watchedIcon.addClass('selected');
+						switch (Settings.watchedCovers) {
+						case 'fade':
+						case 'hide':
+							this.$el.addClass('watched');
+							break;
+						}
+					}
+					coverUrl = this.model.get('image');
+					this.ui.bookmarkIcon.addClass('selected');
+					break;
+				case 'bookmarkedshow':
+					coverUrl = this.model.get('image');
+					this.ui.bookmarkIcon.addClass('selected');
+					break;
+				case 'movie':
+					coverUrl = this.model.get('image');
 
-                if (this.model.get('watched')) {
-                    this.ui.watchedIcon.addClass('selected');
-                    switch (Settings.watchedCovers) {
-                    case 'fade':
-                        this.$el.addClass('watched');
-                        break;
-                    case 'hide':
-                        if ($('.search input').val()) {
-                            this.$el.addClass('watched');
-                        } else {
-                            this.$el.remove();
-                        }
-                        break;
-                    }
-                }
-                if (this.model.get('bookmarked')) {
-                    this.ui.bookmarkIcon.addClass('selected');
-                }
-                break;
-            case 'show':
-                coverUrl = this.model.get('images').poster;
+					if (this.model.get('watched')) {
+						this.ui.watchedIcon.addClass('selected');
+						switch (Settings.watchedCovers) {
+						case 'fade':
+							this.$el.addClass('watched');
+							break;
+						case 'hide':
+							if ($('.search input').val()) {
+								this.$el.addClass('watched');
+							} else {
+								this.$el.remove();
+							}
+							break;
+						}
+					}
+					if (this.model.get('bookmarked')) {
+						this.ui.bookmarkIcon.addClass('selected');
+					}
+					break;
+				case 'show':
+					coverUrl = this.model.get('images').poster;
 
-                if (this.model.get('bookmarked')) {
-                    this.ui.bookmarkIcon.addClass('selected');
-                }
-                break;
+					if (this.model.get('bookmarked')) {
+						this.ui.bookmarkIcon.addClass('selected');
+					}
+					break;
             }
-
 
             this.ui.watchedIcon.tooltip({
                 title: this.ui.watchedIcon.hasClass('selected') ? i18n.__('Mark as unseen') : i18n.__('Mark as Seen')
@@ -189,50 +187,49 @@
             var data;
             var type = this.model.get('type');
             switch (type) {
-            case 'bookmarkedmovie':
-                var SelectedMovie = new Backbone.Model({
-                    imdb_id: this.model.get('imdb_id'),
-                    image: this.model.get('image'),
-                    cover: this.model.get('cover'),
-                    torrents: this.model.get('torrents'),
-                    title: this.model.get('title'),
-                    genre: this.model.get('genre'),
-                    synopsis: this.model.get('synopsis'),
-                    runtime: this.model.get('runtime'),
-                    year: this.model.get('year'),
-                    health: this.model.get('health'),
-                    subtitle: this.model.get('subtitle'),
-                    backdrop: this.model.get('backdrop'),
-                    rating: this.model.get('rating'),
-                    trailer: this.model.get('trailer'),
-                    provider: this.model.get('provider'),
-                    watched: this.model.get('watched'),
-                    bookmarked: true,
-                });
+				case 'bookmarkedmovie':
+					var SelectedMovie = new Backbone.Model({
+						imdb_id: this.model.get('imdb_id'),
+						image: this.model.get('image'),
+						cover: this.model.get('cover'),
+						torrents: this.model.get('torrents'),
+						title: this.model.get('title'),
+						genre: this.model.get('genre'),
+						synopsis: this.model.get('synopsis'),
+						runtime: this.model.get('runtime'),
+						year: this.model.get('year'),
+						health: this.model.get('health'),
+						subtitle: this.model.get('subtitle'),
+						backdrop: this.model.get('backdrop'),
+						rating: this.model.get('rating'),
+						trailer: this.model.get('trailer'),
+						provider: this.model.get('provider'),
+						watched: this.model.get('watched'),
+						bookmarked: true,
+					});
 
-                App.vent.trigger('movie:showDetail', SelectedMovie);
-                break;
+					App.vent.trigger('movie:showDetail', SelectedMovie);
+					break;
 
-            case 'bookmarkedshow':
-                type = 'show';
-                /* falls through */
-            case 'show':
-            case 'movie':
-                var Type = type.charAt(0).toUpperCase() + type.slice(1);
-                this.model.set('health', false);
-                $('.spinner').show();
-                data = provider.detail(this.model.get('imdb_id'), this.model.attributes)
-                    .catch(function () {
-                        $('.spinner').hide();
-                        $('.notification_alert').text(i18n.__('Error loading data, try again later...')).fadeIn('fast').delay(2500).fadeOut('fast');
-                    })
-                    .then(function (data) {
-                        data.provider = provider.name;
-                        $('.spinner').hide();
-                        App.vent.trigger(type + ':showDetail', new App.Model[Type](data));
-                    });
-                break;
-
+				case 'bookmarkedshow':
+					type = 'show';
+					/* falls through */
+				case 'show':
+				case 'movie':
+					var Type = type.charAt(0).toUpperCase() + type.slice(1);
+					this.model.set('health', false);
+					$('.spinner').show();
+					data = provider.detail(this.model.get('imdb_id'), this.model.attributes)
+						.catch(function () {
+							$('.spinner').hide();
+							$('.notification_alert').text(i18n.__('Error loading data, try again later...')).fadeIn('fast').delay(2500).fadeOut('fast');
+						})
+						.then(function (data) {
+							data.provider = provider.name;
+							$('.spinner').hide();
+							App.vent.trigger(type + ':showDetail', new App.Model[Type](data));
+						});
+					break;
             }
 
         },

@@ -1595,7 +1595,7 @@ body,
 }
 .icon-begin {
   display: block;
-  margin: -7px auto;
+  margin: 0px auto;
   height: calc(58%);
   max-height: 256px;
 }
@@ -2069,7 +2069,7 @@ body,
   height: 28px;
   position: absolute;
   top: -6px;
-  left: calc(50% + 52px);
+  left: calc(50% + 64px);
   display: none;
 }
 .events.img-newyear {
