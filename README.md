@@ -29,6 +29,8 @@ The [master](https://github.com/PTCE-Public/popcorn-desktop/tree/master/) branch
 1. `npm install`
 1. `npm start`
 
+If you receive '/usr/bin/env: node: No such file or directory' with 'npm start', try running 'ln -s /usr/bin/nodejs /usr/bin/node', the 'npm start' again.
+
 ### Building
 
 1. `npm install`
