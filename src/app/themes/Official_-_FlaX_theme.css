@@ -5962,6 +5962,18 @@ body,
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
+.settings-container-contain .settings-container #connection .reset-movieAPI {
+  font-size: 13px;
+  color: rgba(228,233,242,0.7);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.settings-container-contain .settings-container #connection .reset-movieAPI:hover {
+  cursor: pointer;
+  color: #d9394b;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
 .settings-container-contain .settings-container #cache .open-tmp-folder {
   font-size: 16px;
   margin-left: 10px;

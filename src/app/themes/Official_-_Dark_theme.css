@@ -5952,13 +5952,25 @@ body,
 }
 .settings-container-contain .settings-container #connection .reset-tvAPI {
   font-size: 13px;
-  color: #8a8b8e;
+  color: #939597;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
 .settings-container-contain .settings-container #connection .reset-tvAPI:hover {
   cursor: pointer;
-  color: #2468cc;
+  color: #fc0;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.settings-container-contain .settings-container #connection .reset-movieAPI {
+  font-size: 13px;
+  color: #939597;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+}
+.settings-container-contain .settings-container #connection .reset-movieAPI:hover {
+  cursor: pointer;
+  color: #fc0;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
