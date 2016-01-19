@@ -152,11 +152,11 @@
 
     resetMovieAPI: function() {
       var value = [{
-        url: 'http://localhost:5001',
-        strictSSL: true
+        url: 'http://localhost:5001/',
+        strictSSL: false
       }, {
-        url: 'http://localhost:5001',
-        strictSSL: true
+        url: 'http://localhost:5001/',
+        strictSSL: false
       }];
       App.settings['movieAPI'] = value;
       //save to db

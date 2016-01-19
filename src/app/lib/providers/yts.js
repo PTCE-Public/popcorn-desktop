@@ -1,179 +1,176 @@
-(function (App) {
-    'use strict';
+(function(App) {
+  'use strict';
+  var querystring = require('querystring');
+  var request = require('request');
+  var Q = require('q');
+  var inherits = require('util').inherits;
 
-    var Q = require('q');
-    var request = require('request');
-    var inherits = require('util').inherits;
+  var URL = false;
 
-    function YTS() {
-        if (!(this instanceof YTS)) {
-            return new YTS();
-        }
-
-        App.Providers.Generic.call(this);
+  function YTS() {
+    if (!(this instanceof YTS)) {
+      return new YTS();
     }
-    inherits(YTS, App.Providers.Generic);
 
-    YTS.prototype.extractIds = function (items) {
-        return _.pluck(items.results, 'imdb_id');
-    };
+    App.Providers.Generic.call(this);
+  }
+  inherits(YTS, App.Providers.Generic);
 
-    var format = function (data) {
-        var results = _.chain(data.movies)
-            .filter(function (movie) {
-                // Filter any 3D only movies
-                return _.any(movie.torrents, function (torrent) {
-                    return torrent.quality !== '3D';
-                });
-            }).map(function (movie) {
-                return {
-                    type: 'movie',
-                    imdb_id: movie.imdb_code,
-                    title: movie.title_english,
-                    year: movie.year,
-                    genre: movie.genres,
-                    rating: movie.rating,
-                    runtime: movie.runtime,
-                    image: movie.medium_cover_image,
-                    cover: movie.medium_cover_image,
-                    backdrop: movie.background_image_original,
-                    synopsis: movie.description_full,
-                    trailer: 'https://www.youtube.com/watch?v=' + movie.yt_trailer_code || false,
-                    certification: movie.mpa_rating,
-                    torrents: _.reduce(movie.torrents, function (torrents, torrent) {
-                        if (torrent.quality !== '3D') {
-                            torrents[torrent.quality] = {
-                                url: torrent.url,
-                                magnet: 'magnet:?xt=urn:btih:' + torrent.hash + '&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337',
-                                size: torrent.size_bytes,
-                                filesize: torrent.size,
-                                seed: torrent.seeds,
-                                peer: torrent.peers
-                            };
-                        }
-                        return torrents;
-                    }, {})
-                };
-            }).value();
+  YTS.prototype.extractIds = function(items) {
+    return _.pluck(items.results, 'imdb_id');
+  };
 
-        return {
-            results: Common.sanitize(results),
-            hasMore: data.movie_count > data.page_number * data.limit
+  var queryTorrents = function(filters) {
+
+    var deferred = Q.defer();
+
+    var params = {};
+    params.sort = 'seeds';
+    params.limit = '50';
+
+    if (filters.keywords) {
+      params.keywords = filters.keywords.replace(/\s/g, '% ');
+    }
+
+    if (filters.genre) {
+      params.genre = filters.genre;
+    }
+
+    if (filters.order) {
+      params.order = filters.order;
+    }
+
+    if (filters.sorter && filters.sorter !== 'popularity') {
+      params.sort = filters.sorter;
+    }
+
+    function get(index) {
+      var options = {
+        url: Settings.movieAPI[index].url + 'movies/' + filters.page + '?' + querystring.stringify(params).replace(/%25%20/g, '%20'),
+        json: true
+      };
+
+
+      var req = jQuery.extend(true, {}, Settings.movieAPI[index], options);
+      win.info('Request to MovieApi', req.url);
+      request(req, function(err, res, data) {
+        if (err || res.statusCode >= 400) {
+          win.warn('MovieAPI endpoint \'%s\' failed.', Settings.movieAPI[index].url);
+          if (index + 1 >= Settings.movieAPI.length) {
+            return deferred.reject(err || 'Status Code is above 400');
+          } else {
+            get(index + 1);
+          }
+          return;
+        } else if (!data || (data.error && data.error !== 'No movies found')) {
+          err = data ? data.status_message : 'No data returned';
+          win.error('API error:', err);
+          return deferred.reject(err);
+        } else {
+          data.forEach(function(entry) {
+            entry.type = 'show';
+          });
+          deferred.resolve({
+            results: Common.sanitize(data),
+            hasMore: true
+          });
+        }
+      });
+    }
+    get(0);
+
+    return deferred.promise;
+  };
+
+  // Single element query
+  var queryTorrent = function(torrent_id, old_data, debug) {
+    debug === undefined ? debug = true : '';
+    return Q.Promise(function(resolve, reject) {
+
+      function get(index) {
+        var options = {
+          url: Settings.tvAPI[index].url + 'show/' + torrent_id,
+          json: true
         };
-    };
-
-    YTS.prototype.fetch = function (filters) {
-        var params = {
-            sort_by: 'seeds',
-            limit: 50,
-            with_rt_ratings: true
-        };
-
-        if (filters.page) {
-            params.page = filters.page;
-        }
-
-        if (filters.keywords) {
-            params.query_term = filters.keywords;
-        }
-
-        if (filters.genre && filters.genre !== 'All') {
-            params.genre = filters.genre;
-        }
-
-        if (filters.order === 1) {
-            params.order_by = 'asc';
-        }
-
-        if (filters.sorter && filters.sorter !== 'popularity') {
-            switch (filters.sorter) {
-                case 'last added':
-                    params.sort_by = 'date_added';
-                    break;
-                case 'trending':
-                    params.sort_by = 'trending_score';
-                    break;
-                default:
-                    params.sort_by = filters.sorter;
+        document.getElementById('TVApi').setAttribute('data-original-title', tvApiServer);
+        var req = jQuery.extend(true, {}, Settings.tvAPI[index], options);
+        win.info('Request to TVApi', req.url);
+        request(req, function(error, response, data) {
+          if (error || response.statusCode >= 400) {
+            win.warn('TVAPI endpoint \'%s\' failed.', Settings.tvAPI[index].url);
+            if (index + 1 >= Settings.tvAPI.length) {
+              return reject(error || 'Status Code is above 400');
+            } else {
+              get(index + 1);
             }
-        }
+            return;
+          } else if (!data || (data.error && data.error !== 'No data returned') || data.episodes.length === 0) {
 
-        if (Settings.movies_quality !== 'all') {
-            params.quality = Settings.movies_quality;
-        }
+            var err = (data && data.episodes.length !== 0) ? data.error : 'No data returned';
+            debug ? win.error('API error:', err) : '';
+            reject(err);
 
-        if (Settings.translateSynopsis) {
-            params.lang = Settings.language;
-        }
+          } else {
+            data = Common.sanitize(data);
+            // we cache our new element or translate synopsis
 
-        var defer = Q.defer();
-
-        function get(index) {
-            var options = {
-                uri: Settings.ytsAPI[index].uri + 'api/v2/list_movies.json',
-                qs: params,
-                json: true,
-                timeout: 10000
-            };
-            var req = jQuery.extend(true, {}, Settings.ytsAPI[index], options);
-            request(req, function (err, res, data) {
-                if (err || res.statusCode >= 400 || (data && !data.data)) {
-                    win.warn('YTS API endpoint \'%s\' failed.', Settings.ytsAPI[index].uri);
-                    if (index + 1 >= Settings.ytsAPI.length) {
-                        return defer.reject(err || 'Status Code is above 400');
-                    } else {
-                        get(index + 1);
-                    }
-                    return;
-                } else if (!data || data.status === 'error') {
-                    err = data ? data.status_message : 'No data returned';
-                    return defer.reject(err);
-                } else {
-                    return defer.resolve(format(data.data));
+            if (Settings.translateSynopsis && Settings.language !== 'en') {
+              var langAvailable;
+              for (var x = 0; x < Settings.tvdbLangs.length; x++) {
+                if (Settings.tvdbLangs[x].abbreviation.indexOf(Settings.language) > -1) {
+                  langAvailable = true;
+                  break;
                 }
-            });
-        }
-        get(0);
+              }
+              if (!langAvailable) {
+                resolve(data);
+              } else {
 
-        return defer.promise;
-    };
+                var reqTimeout = setTimeout(function() {
+                  resolve(data);
+                }, 2000);
 
-    YTS.prototype.random = function () {
-        var defer = Q.defer();
-
-        function get(index) {
-            var options = {
-                uri: Settings.ytsAPI[index].uri + 'api/v2/get_random_movie.json?' + Math.round((new Date()).valueOf() / 1000),
-                json: true,
-                timeout: 10000
-            };
-            var req = jQuery.extend(true, {}, Settings.ytsAPI[index], options);
-            request(req, function (err, res, data) {
-                if (err || res.statusCode >= 400 || (data && !data.data)) {
-                    win.warn('YTS API endpoint \'%s\' failed.', Settings.ytsAPI[index].uri);
-                    if (index + 1 >= Settings.ytsAPI.length) {
-                        return defer.reject(err || 'Status Code is above 400');
-                    } else {
-                        get(index + 1);
+                var Client = require('node-tvdb');
+                var tvdb = new Client('7B95D15E1BE1D75A', Settings.language);
+                win.info('Request to TVDB API: \'%s\' - %s', old_data.title, App.Localization.langcodes[Settings.language].name);
+                tvdb.getSeriesAllById(old_data.tvdb_id)
+                  .then(function(localization) {
+                    clearTimeout(reqTimeout);
+                    _.extend(data, {
+                      synopsis: localization.Overview
+                    });
+                    for (var i = 0; i < localization.Episodes.length; i++) {
+                      for (var j = 0; j < data.episodes.length; j++) {
+                        if (localization.Episodes[i].id.toString() === data.episodes[j].tvdb_id.toString()) {
+                          data.episodes[j].overview = localization.Episodes[i].Overview;
+                          break;
+                        }
+                      }
                     }
-                    return;
-                } else if (!data || data.status === 'error') {
-                    err = data ? data.status_message : 'No data returned';
-                    return defer.reject(err);
-                } else {
-                    return defer.resolve(Common.sanitize(data.data));
-                }
-            });
-        }
-        get(0);
+                    resolve(Common.sanitize(data));
+                  })
+                  .catch(function(error) {
+                    resolve(data);
+                  });
+              }
+            } else {
+              resolve(data);
+            }
+          }
+        });
+      }
+      get(0);
+    });
+  };
 
-        return defer.promise;
-    };
+  YTS.prototype.fetch = function(filters) {
+    return queryTorrents(filters);
+  };
 
-    YTS.prototype.detail = function (torrent_id, old_data) {
-        return Q(old_data);
-    };
+  YTS.prototype.detail = function(torrent_id, old_data, debug) {
+    //return queryTorrent(torrent_id, old_data, debug);
+  };
 
-    App.Providers.Yts = YTS;
+  App.Providers.Yts = YTS;
 
 })(window.App);

@@ -105,11 +105,11 @@ Settings.tvAPI = [{
 }];
 
 Settings.movieAPI = [{
-  url: 'http://localhost:5001',
-  strictSSL: true
+  url: 'http://localhost:5001/',
+  strictSSL: false
 }, {
-  url: 'http://localhost:5001',
-  strictSSL: true
+  url: 'http://localhost:5001/',
+  strictSSL: false
 }]
 
 Settings.ytsAPI = [{
