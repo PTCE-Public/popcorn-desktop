@@ -56,14 +56,14 @@
         </div>
     </li>
 
-    <!-- Randomize -->
+    <!-- Randomize
     <% if (Settings.activateRandomize) { %>
     <li style="display:block">
     <% } else { %>
     <li style="display:none">
     <% } %>
         <i id="filterbar-random" class="fa fa-random tooltipped" data-toggle="tooltip" data-placement="bottom" title="<%= i18n.__("Randomize") %>"></i>
-    </li>
+    </li> -->
 
     <!-- VPN -->
     <% if(App.VPNClient.isDisabled()) { %>

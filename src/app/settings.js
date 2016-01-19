@@ -94,14 +94,19 @@ Settings.vpnUsername = '';
 Settings.vpnPassword = '';
 
 Settings.tvAPI = [{
-    url: 'https://popcorntime.ws/api/eztv/',
+    url: 'https://ptapitsxaabevfvk.onion.to/', //PRE-RELEASE server, this server should have the latest api version
     strictSSL: true
 },{
-    url: 'https://ptapitsxaabevfvk.onion.to/', //PRE-RELEASE server, this server should have the latest api version
+    url: 'https://popcorntime.ws/api/eztv/',
     strictSSL: true
 },{
     url: 'https://popcornwvnbg7jev.onion.to/',
     strictSSL: true
+}];
+
+Settings.movieAPI = [{
+    uri: 'http://localhost:5001/',
+    strictSSL: false
 }];
 
 Settings.ytsAPI = [{

@@ -17,7 +17,7 @@
   "window": {
     "title": "Popcorn Time CE",
     "icon": "src/app/images/icon.png",
-    "toolbar": false,
+    "toolbar": true,
     "frame": false,
     "min_width": 960,
     "min_height": 520,

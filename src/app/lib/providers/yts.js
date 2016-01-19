@@ -19,7 +19,7 @@
     };
 
     var format = function (data) {
-        var results = _.chain(data.movies)
+        var results = _.chain(data)
             .filter(function (movie) {
                 // Filter any 3D only movies
                 return _.any(movie.torrents, function (torrent) {
@@ -28,27 +28,32 @@
             }).map(function (movie) {
                 return {
                     type: 'movie',
-                    imdb_id: movie.imdb_code,
-                    title: movie.title_english,
+                    imdb_id: movie.imdb_id,
+                    title: movie.title,
                     year: movie.year,
                     genre: movie.genres,
                     rating: movie.rating,
                     runtime: movie.runtime,
-                    image: movie.medium_cover_image,
-                    cover: movie.medium_cover_image,
-                    backdrop: movie.background_image_original,
-                    synopsis: movie.description_full,
+                    image: movie.images.poster,
+                    cover: movie.images.poster,
+                    backdrop: movie.images.poster,
+                    synopsis: movie.plot,
                     trailer: 'https://www.youtube.com/watch?v=' + movie.yt_trailer_code || false,
-                    certification: movie.mpa_rating,
+                    //certification: movie.mpa_rating,
                     torrents: _.reduce(movie.torrents, function (torrents, torrent) {
                         if (torrent.quality !== '3D') {
                             torrents[torrent.quality] = {
-                                url: torrent.url,
-                                magnet: 'magnet:?xt=urn:btih:' + torrent.hash + '&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337',
-                                size: torrent.size_bytes,
+                                //url: torrent.url,
+                                magnet: 'magnet:?xt=urn:btih:' + torrent.hash +
+                                '&tr=udp://glotorrents.pw:6969/announce&tr=udp://tracker.opentrackr.org:1337/announce'
+                                + '&tr=udp://torrent.gresille.org:80/announce&tr=udp://tracker.openbittorrent.com:80'
+                                + '&tr=udp://tracker.coppersurfer.tk:6969&tr=udp://tracker.leechers-paradise.org:6969'
+                                + '&tr=udp://p4p.arenabg.ch:1337&tr=udp://tracker.internetwarriors.net:1337',
+                                size: torrent.size,
                                 filesize: torrent.size,
                                 seed: torrent.seeds,
-                                peer: torrent.peers
+                                peer: torrent.peers,
+                                scraper: torrent.scraper
                             };
                         }
                         return torrents;
@@ -58,15 +63,15 @@
 
         return {
             results: Common.sanitize(results),
-            hasMore: data.movie_count > data.page_number * data.limit
+            hasMore: true //data.movie_count > data.page_number * data.limit
         };
     };
 
     YTS.prototype.fetch = function (filters) {
         var params = {
-            sort_by: 'seeds',
+            sort: 'seeds',
             limit: 50,
-            with_rt_ratings: true
+            page: 1
         };
 
         if (filters.page) {
@@ -74,7 +79,7 @@
         }
 
         if (filters.keywords) {
-            params.query_term = filters.keywords;
+            params.keywords = filters.keywords;
         }
 
         if (filters.genre && filters.genre !== 'All') {
@@ -88,13 +93,13 @@
         if (filters.sorter && filters.sorter !== 'popularity') {
             switch (filters.sorter) {
                 case 'last added':
-                    params.sort_by = 'date_added';
+                    params.sort = 'year';
                     break;
                 case 'trending':
-                    params.sort_by = 'trending_score';
+                    params.sort = 'trending_score';
                     break;
                 default:
-                    params.sort_by = filters.sorter;
+                    params.sort = filters.sorter;
             }
         }
 
@@ -110,26 +115,22 @@
 
         function get(index) {
             var options = {
-                uri: Settings.ytsAPI[index].uri + 'api/v2/list_movies.json',
+                uri: Settings.movieAPI[index].uri + 'movies',
                 qs: params,
                 json: true,
                 timeout: 10000
             };
-            var req = jQuery.extend(true, {}, Settings.ytsAPI[index], options);
+            var req = jQuery.extend(true, {}, Settings.movieAPI[index], options);
             request(req, function (err, res, data) {
-                if (err || res.statusCode >= 400 || (data && !data.data)) {
-                    win.warn('YTS API endpoint \'%s\' failed.', Settings.ytsAPI[index].uri);
-                    if (index + 1 >= Settings.ytsAPI.length) {
+                if (err || res.statusCode >= 400 || (!data)) {
+                    win.warn('YTS API endpoint \'%s\' failed.', Settings.movieAPI[index].uri);
+                    if (index + 1 >= Settings.movieAPI.length) {
                         return defer.reject(err || 'Status Code is above 400');
                     } else {
                         get(index + 1);
                     }
-                    return;
-                } else if (!data || data.status === 'error') {
-                    err = data ? data.status_message : 'No data returned';
-                    return defer.reject(err);
                 } else {
-                    return defer.resolve(format(data.data));
+                    return defer.resolve(format(data));
                 }
             });
         }
@@ -138,20 +139,21 @@
         return defer.promise;
     };
 
+    /*
     YTS.prototype.random = function () {
         var defer = Q.defer();
 
         function get(index) {
             var options = {
-                uri: Settings.ytsAPI[index].uri + 'api/v2/get_random_movie.json?' + Math.round((new Date()).valueOf() / 1000),
+                uri: Settings.movieAPI[index].uri + 'api/v2/get_random_movie.json?' + Math.round((new Date()).valueOf() / 1000),
                 json: true,
                 timeout: 10000
             };
-            var req = jQuery.extend(true, {}, Settings.ytsAPI[index], options);
+            var req = jQuery.extend(true, {}, Settings.movieAPI[index], options);
             request(req, function (err, res, data) {
                 if (err || res.statusCode >= 400 || (data && !data.data)) {
-                    win.warn('YTS API endpoint \'%s\' failed.', Settings.ytsAPI[index].uri);
-                    if (index + 1 >= Settings.ytsAPI.length) {
+                    win.warn('YTS API endpoint \'%s\' failed.', Settings.movieAPI[index].uri);
+                    if (index + 1 >= Settings.movieAPI.length) {
                         return defer.reject(err || 'Status Code is above 400');
                     } else {
                         get(index + 1);
@@ -161,14 +163,14 @@
                     err = data ? data.status_message : 'No data returned';
                     return defer.reject(err);
                 } else {
-                    return defer.resolve(Common.sanitize(data.data));
+                    return defer.resolve(Common.sanitize(data));
                 }
             });
         }
         get(0);
 
         return defer.promise;
-    };
+    }; */
 
     YTS.prototype.detail = function (torrent_id, old_data) {
         return Q(old_data);
