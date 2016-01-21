@@ -88,8 +88,12 @@
             var category = $('.online-categories > select').val();
             AdvSettings.set('OnlineSearchCategory', category);
             if (category === 'TV Series') {
-                category = 'TV';
-            }
+                category = 'tv';
+            } else if (category === 'Movies') {
+				category = 'movies';
+			} else if (category === 'Anime') {
+				category = 'anime';
+			}
             var current = $('.onlinesearch-info > ul.file-list').html();
 
             if (input === '' && current === '') {
@@ -107,7 +111,7 @@
 
             if (this.searchEngine === 'KAT') {
 
-                var kat = require('kat-api');
+                var kat = require('kat-api-ce');
                 kat.search({
                     query: input,
                     min_seeds: 5,
