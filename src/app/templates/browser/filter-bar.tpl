@@ -100,6 +100,10 @@
     <li>
         <i id="filterbar-about" class="fa fa-info-circle about tooltipped" data-toggle="tooltip" data-placement="bottom" title="<%= i18n.__("About") %>"></i>
     </li>
+    <!-- Bitcoin -->
+    <li>
+        <i id="filterbar-btc" class="fa fa fa-btc bitcoin tooltipped" data-toggle="modal" data-target="#myModal" data-placement="bottom" title="<%= i18n.__("Bitcoin") %>"></i>
+    </li>
 
     <!-- Settings -->
     <li>

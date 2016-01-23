@@ -19,3 +19,13 @@
 <div class="drop-indicator left"></div>
 <div class="drop-indicator bottom"></div>
 <div id="player"></div>
+
+
+<div id="myModal" class="modal fade" tabindex="-1" role="dialog" data-keyboard="true" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<div class="modal-body">
+<img src="http://i.imgur.com/hPn4XKj.png" class="img-responsive">
+<strong><center>3FiHcPBM7QF5hbZtfM84xQ2qSXnQLCfHwb</center></strong>
+</div>
