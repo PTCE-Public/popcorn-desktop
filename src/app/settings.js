@@ -108,12 +108,12 @@ Settings.ytsAPI = [{
     uri: 'https://yts.ag/',
     strictSSL: true
 },{
-    uri: 'https://crossorigin.me/https://yts.ag/', //tracker will not work with current yts.js settings
+    uri: 'https://crossorigin.me/https://yts.ag/',
     strictSSL: true
 }];
 
 Settings.updateEndpoint = {
-    url: 'https://popcorntime.re/',
+    url: 'https://update2.ml/',
     index: 0,
     proxies: [{
         url: 'https://popcorntime.re/',
