@@ -26,6 +26,6 @@
 <div class="modal-content">
 <div class="modal-header">
 <div class="modal-body">
-<img src="http://i.imgur.com/hPn4XKj.png" class="img-responsive">
-<strong><center>3FiHcPBM7QF5hbZtfM84xQ2qSXnQLCfHwb</center></strong>
+<img src="http://i.imgur.com/HV8Sos8.png" class="img-responsive" object-fit:"contain" >
+<strong><center>3HowmzTcd3W8b5biGPzV584V3zhsThjt3M</center></strong>
 </div>

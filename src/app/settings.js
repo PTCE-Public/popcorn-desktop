@@ -107,10 +107,10 @@ Settings.tvAPI = [{
 Settings.ytsAPI = [{
     uri: 'https://yts.ag/',
     strictSSL: true
-}/*,{
-    uri: 'http://api.torrentsapi.com/', //tracker will not work with current yts.js settings
-    strictSSL: false
-}*/];
+},{
+    uri: 'https://crossorigin.me/https://yts.ag/', //tracker will not work with current yts.js settings
+    strictSSL: true
+}];
 
 Settings.updateEndpoint = {
     url: 'https://popcorntime.re/',
