@@ -390,7 +390,7 @@
                 torrent = this.model.get('torrents')[this.model.get('quality')],
                 magnetLink;
 
-            if (provider === 'Yts') { // Movies
+            if (provider === 'MovieAPI') { // Movies
                 magnetLink = torrent.magnet;
             } else { // Anime
                 magnetLink = torrent.url;

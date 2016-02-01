@@ -399,7 +399,7 @@
             var that = this;
             $('.spinner').show();
 
-            App.Providers.get('Yts').random()
+            App.Providers.get('MovieAPI').random()
                 .then(function (data) {
                     if (App.watchedMovies.indexOf(data.imdb_code) !== -1) {
                         that.randomMovie();

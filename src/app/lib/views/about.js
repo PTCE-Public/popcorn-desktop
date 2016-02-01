@@ -12,7 +12,7 @@
         events: {
             'click .close-icon': 'closeAbout',
             'click #changelog': 'showChangelog',
-            'click .title-issue': 'reportIssue'
+            //'click .title-issue': 'reportIssue'
         },
 
         onShow: function () {

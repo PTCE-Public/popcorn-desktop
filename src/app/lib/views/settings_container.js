@@ -37,6 +37,7 @@
             'click #connect-with-tvst': 'connectWithTvst',
             'click #disconnect-tvst': 'disconnectTvst',
             'click .reset-tvAPI': 'resetTVShowAPI',
+            'click .reset-movieAPI': 'resetMovieAPI',
             'change #tmpLocation': 'updateCacheDirectory',
             'click #syncTrakt': 'syncTrakt',
             'click .qr-code': 'generateQRcode',
@@ -126,19 +127,41 @@
             App.vent.trigger('settings:close');
         },
 
+        resetMovieAPI: function () {
+            var value = [{
+                uri: 'https://yts.ag/',
+                strictSSL: true
+            },{
+                uri: 'https://crossorigin.me/https://yts.ag/',
+                strictSSL: true
+            }];
+            App.settings['movieAPI'] = value;
+            
+            //Save to db
+            App.db.writeSetting({
+                key: 'movieAPI',
+                value: value
+            }).then(function () {
+                that.ui.success_alert.show().delay(3000).fadeOut(400);
+            });
+
+            that.syncSetting('movieAPI', value);
+        },
+
         resetTVShowAPI: function () {
             var value = [{
-                url: 'https://eztvapi.re/',
+                url: 'https://popcorntime.ws/api/eztv/',
                 strictSSL: true
-            }, {
-                url: 'https://api.popcorntime.ml/',
+            },{
+                url: 'https://ptapitsxaabevfvk.onion.to/', //PRE-RELEASE server, this server should have the latest api version
                 strictSSL: true
-            }, {
-                url: 'http://tv.ytspt.re/',
-                strictSSL: false
+            },{
+                url: 'https://popcornwvnbg7jev.onion.to/',
+                strictSSL: true
             }];
             App.settings['tvAPI'] = value;
-            //save to db
+            
+            //Save to db
             App.db.writeSetting({
                 key: 'tvAPI',
                 value: value
@@ -186,6 +209,19 @@
             case 'httpApiPort':
                 apiDataChanged = true;
                 value = parseInt(field.val());
+                break;
+            case 'movieAPI':
+                value = field.val();
+                if (value.substr(-1) !== '/') {
+                    value += '/';
+                }
+                if (value.substr(0, 8) !== 'https://' && value.substr(0, 7) !== 'http://') {
+                    value = 'http://' + value;
+                }
+                value = [{
+                    url: value,
+                    strictSSL: value.substr(0, 8) === 'https://'
+                }];
                 break;
             case 'tvAPI':
                 value = field.val();
@@ -275,7 +311,7 @@
                 that.moveTmpLocation(value);
             }
 
-            //save to db
+            // save to db
             App.db.writeSetting({
                 key: field.attr('name'),
                 value: value
@@ -346,7 +382,7 @@
                 break;
             case 'movies_quality':
             case 'translateSynopsis':
-                App.Providers.delete('Yts');
+                App.Providers.delete('MovieAPI');
                 App.vent.trigger('movies:list');
                 App.vent.trigger('settings:show');
                 break;

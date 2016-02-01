@@ -93,6 +93,14 @@ Settings.vpn = false;
 Settings.vpnUsername = '';
 Settings.vpnPassword = '';
 
+Settings.movieAPI = [{
+    url: 'https://yts.ag/',
+    strictSSL: true
+},{
+    url: 'https://crossorigin.me/https://yts.ag/',
+    strictSSL: true
+}];
+
 Settings.tvAPI = [{
     url: 'https://popcorntime.ws/api/eztv/',
     strictSSL: true
@@ -104,26 +112,12 @@ Settings.tvAPI = [{
     strictSSL: true
 }];
 
-Settings.ytsAPI = [{
-    uri: 'https://yts.ag/',
-    strictSSL: true
-},{
-    uri: 'https://crossorigin.me/https://yts.ag/',
-    strictSSL: true
-}];
-
 Settings.updateEndpoint = {
     url: 'https://update2.ml/',
     index: 0,
     proxies: [{
-        url: 'https://popcorntime.re/',
-        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C',
-    }, {
-        url: 'https://popcorntime.ml/',
-        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C'
-    }, {
-        url: 'https://popcorntime.cc/',
-        fingerprint: '30:A6:BA:6C:19:A4:D5:C3:5A:E8:F1:56:C6:B4:E1:DC:EF:DD:EC:8C'
+        url: 'https://update2.ml/',
+        fingerprint: 'FE:04:1C:E7:30:C0:8E:DE:22:53:A3:30:07:F1:73:19:D0:E2:6B:40',
     }, {
         url: 'https://its.pt/',
         ssl: false,

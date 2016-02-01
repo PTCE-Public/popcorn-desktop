@@ -1,7 +1,7 @@
 <ul class="nav nav-hor left">
-    <li class="source active showMovies providerinfo" data-toggle="tooltip" data-placement="top" title="YTS.ag"><%= i18n.__("Movies") %></li>
-    <li class="source showShows providerinfo" data-toggle="tooltip" data-placement="top" id="TVApi" title="TV API"><%= i18n.__("TV Series") %></li>
-        <li class="source showAnime providerinfo" data-toggle="tooltip" data-placement="top" title="Haruhichan"><%= i18n.__("Anime") %></li>
+    <li class="source active showMovies providerinfo" data-toggle="tooltip" data-placement="top" title="Movie API"><%= i18n.__("Movies") %></li>
+    <li class="source showShows providerinfo" data-toggle="tooltip" data-placement="top" title="TV API"><%= i18n.__("TV Series") %></li>
+    <li class="source showAnime providerinfo" data-toggle="tooltip" data-placement="top" title="Haruhichan"><%= i18n.__("Anime") %></li>
 </ul>
 <ul id="nav-filters" class="nav nav-hor filters">
     <% if(typeof type !== 'undefined'){ %>

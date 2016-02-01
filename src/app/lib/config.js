@@ -2,7 +2,13 @@
     'use strict';
 
     var Config = {
-        title: 'Popcorn Time',
+        title: 'Popcorn Time CE',
+        links: {
+            site: 'https://popcorntimece.tk',
+            git: 'https://github.com/PTCE-Public',
+            status: 'https://popcorntimece.statuspage.io',
+            discuss: 'https://reddit.com/r/Popcorntime'
+        },
         platform: process.platform,
         genres: [
             'All',
@@ -146,7 +152,7 @@
         },
 
         providers: {
-            movie: ['Yts'],
+            movie: ['MovieAPI'],
             tvshow: ['TVApi'],
             anime: ['Haruhichan'],
             subtitle: 'YSubs',

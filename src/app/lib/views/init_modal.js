@@ -47,7 +47,7 @@
                     App.vent.trigger('restartPopcornTime');
                 });
 
-        },
+        }
 
     });
 

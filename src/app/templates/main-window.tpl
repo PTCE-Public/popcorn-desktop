@@ -23,9 +23,12 @@
 
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" data-keyboard="true" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<div class="modal-body">
-<img src="http://i.imgur.com/HV8Sos8.png" class="img-responsive" object-fit:"contain" >
-<strong><center>3HowmzTcd3W8b5biGPzV584V3zhsThjt3M</center></strong>
+    <div class="modal-content">
+        <div class="modal-body">
+            <center>
+                <img src="http://i.imgur.com/HV8Sos8.png" class="img-responsive" object-fit:"contain" >
+                <strong>3HowmzTcd3W8b5biGPzV584V3zhsThjt3M</strong>
+            </center>
+        </div>
+    </div>
 </div>
