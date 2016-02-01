@@ -129,10 +129,10 @@
 
         resetMovieAPI: function () {
             var value = [{
-                uri: 'https://yts.ag/',
+                url: 'https://yts.ag/',
                 strictSSL: true
             },{
-                uri: 'https://crossorigin.me/https://yts.ag/',
+                url: 'https://crossorigin.me/https://yts.ag/',
                 strictSSL: true
             }];
             App.settings['movieAPI'] = value;
@@ -144,7 +144,7 @@
             }).then(function () {
                 that.ui.success_alert.show().delay(3000).fadeOut(400);
             });
-
+            
             that.syncSetting('movieAPI', value);
         },
 
@@ -211,18 +211,6 @@
                 value = parseInt(field.val());
                 break;
             case 'movieAPI':
-                value = field.val();
-                if (value.substr(-1) !== '/') {
-                    value += '/';
-                }
-                if (value.substr(0, 8) !== 'https://' && value.substr(0, 7) !== 'http://') {
-                    value = 'http://' + value;
-                }
-                value = [{
-                    url: value,
-                    strictSSL: value.substr(0, 8) === 'https://'
-                }];
-                break;
             case 'tvAPI':
                 value = field.val();
                 if (value.substr(-1) !== '/') {
@@ -382,6 +370,11 @@
                 break;
             case 'movies_quality':
             case 'translateSynopsis':
+                App.Providers.delete('MovieAPI');
+                App.vent.trigger('movies:list');
+                App.vent.trigger('settings:show');
+                break;
+            case 'movieAPI':
                 App.Providers.delete('MovieAPI');
                 App.vent.trigger('movies:list');
                 App.vent.trigger('settings:show');

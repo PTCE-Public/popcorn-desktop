@@ -5950,13 +5950,13 @@ body,
   padding-left: 4px;
   padding-right: 8px;
 }
-.settings-container-contain .settings-container #connection .reset-tvAPI {
+.settings-container-contain .settings-container #connection [class^="reset-"] {
   font-size: 13px;
   color: #0b0b0b;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
-.settings-container-contain .settings-container #connection .reset-tvAPI:hover {
+.settings-container-contain .settings-container #connection [class^="reset-"]:hover {
   cursor: pointer;
   color: #f4a460;
   -webkit-transition: all 0.5s;

@@ -413,7 +413,7 @@
         <div class="content">
             <span>
                 <p><%= i18n.__("Movie API Endpoint") %></p>
-                    <input id="movieAPI" type="text" size="50" name="movieAPI" value="<%= Settings.movieAPI[0].url %>">
+                    <input id="movieAPI" type="text" size="50" name="movieAPI" value="<%=Settings.movieAPI[0].url%>">
                     <% if (Settings.movieAPI.length <= 1) { %>
                     &nbsp;&nbsp;<i class="reset-movieAPI fa fa-undo tooltipped" data-toggle="tooltip" data-placement="auto" title="<%= i18n.__('Reset to Default Settings') %>"></i>
                     <% } %>
