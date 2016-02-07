@@ -25,6 +25,7 @@
         play: function (streamModel) {
             var self = this;
             var subtitle = streamModel.get('subFile');
+			var title = streamModel.get('title');
             var cover = streamModel.get('cover');
             var url = streamModel.get('src');
             this.attributes.url = url;
@@ -39,8 +40,8 @@
                         language: 'en-US'
                     }],
                     cover: {
-                        title: streamModel.get('title'),
-                        url: streamModel.get('cover')
+                        title: title,
+                        url: cover
                     },
                     subtitles_style: {
                         backgroundColor: AdvSettings.get('subtitle_decoration') === 'Opaque Background' ? '#000000FF' : '#00000000', // color of background - see http://dev.w3.org/csswg/css-color/#hex-notation
@@ -60,8 +61,8 @@
                 media = {
                     url: url,
                     cover: {
-                        title: streamModel.get('title'),
-                        url: streamModel.get('cover')
+                        title: title,
+                        url: cover
                     }
                 };
             }
@@ -162,6 +163,7 @@
     var browser = new chromecast.Browser();
 
     browser.on('deviceOn', function (device) {
+		win.info('Found Chromecast Device: %s at %s', device.config.name, device.host);
         collection.add(new Chromecast({
             device: device
         }));

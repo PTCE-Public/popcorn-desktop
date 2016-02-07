@@ -47,7 +47,7 @@
                         'parentID': '-1',
                         'restricted': '1'
                     })
-                    .ele('dc:title', {}, 'Popcorn Time Video')
+                    .ele('dc:title', {}, 'Popcorn Time CE')
                     .insertAfter('res', {
                         'protocolInfo': 'http-get:*:video/mp4:*',
                         'xmlns:pv': 'http://www.pv.com/pvns/',
@@ -87,7 +87,7 @@
                         'parentID': '-1',
                         'restricted': '1'
                     })
-                    .ele('dc:title', {}, 'Popcorn Time Video')
+                    .ele('dc:title', {}, 'Popcorn Time CE')
                     .insertAfter('res', {
                         'protocolInfo': 'http-get:*:video/mp4:*',
                     }, url_video)
@@ -147,7 +147,8 @@
     });
 
     win.info('Scanning: Local Network for DLNA devices');
-    browser.start();
+	//Don't search Chromecast devices
+    browser.searchUPnP();
 
     App.Device.Dlna = Dlna;
 })(window.App);

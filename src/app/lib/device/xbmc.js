@@ -22,6 +22,7 @@
     });
 
     browser.on('deviceOn', function (device) {
+		win.info('Found XBMC Device: %s at %s', device.name, device.info.addresses[0]);
         collection.add(new AirplayXBMC({
             device: device
         }));
