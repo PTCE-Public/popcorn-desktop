@@ -113,10 +113,10 @@ Settings.tvAPI = [{
 }];
 
 Settings.updateEndpoint = {
-    url: 'http://popcorntimece.ch/',
+    url: 'https://popcorntimece.ch/',
     index: 0,
     proxies: [{
-        url: 'http://popcorntimece.ch/',
+        url: 'https://popcorntimece.ch/',
         fingerprint: '4A:8C:A4:F9:0E:2C:1F:D3:D3:92:42:F5:3E:46:96:C9:5A:7C:E2:0B',
     }, {
         url: 'http://popcorntimece.ch/',
