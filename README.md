@@ -4,7 +4,7 @@ Allow anyone to easily watch their favorite movies, shows, and anime.
 
 ![Popcorn Time](src/app/images/icon.png)
 
-Visit the project's website at <https://popcorntimece.tk/>.
+Visit the project's website at <https://popcorntimece.ch/>.
 
 This project would absolutely **not** be possible without the original developer's hard work into making Popcorn Time what it is today. All credit should go to them, we're just trying to help the community :)
 
@@ -40,8 +40,8 @@ The [master](https://github.com/PTCE-Public/popcorn-desktop/tree/master/) branch
 
 Keep track of Popcorn Time CE development and community activity.
 
-* Join in discussions on the [Popcorn Time CE Forum](https://discuss.popcorntimece.tk/)
-* Visit the [website](https://popcorntimece.tk/)
+* Join in discussions on the [Popcorn Time CE Forum](https://discuss.popcorntimece.ch/)
+* Visit the [website](https://popcorntimece.ch/)
 
 
 ## Versioning
@@ -76,6 +76,6 @@ You should have received a copy of the GNU General Public License along with thi
 
 ***
 
-If you want to contact us : [hello@popcorntimece.tk](mailto:hello@popcorntimece.tk) or [use the form](https://popcorntimece.tk/contact/) on our website.
+If you want to contact us : [popcorntimece@hmamail.com](mailto:popcorntimece@hmamail.com) or [use the form](https://popcorntimece.ch/contact/) on our website.
  
 Copyright (c) 2015 Popcorn Time CE - Released under the [GPL v3 license](LICENSE.txt).
