@@ -44,7 +44,7 @@
         var self = this;
 
         this.options = _.defaults(options || {}, {
-            endpoint: AdvSettings.get('updateEndpoint').url + 'update3.json' + '?version=' + App.settings.version + '&nwversion=' + process.versions['node-webkit'],
+            endpoint: AdvSettings.get('updateEndpoint').url + 'update.json' + '?version=' + App.settings.version + '&nwversion=' + process.versions['node-webkit'],
             channel: 'beta'
         });
 
@@ -133,9 +133,8 @@
         readStream.pipe(verify);
         readStream.on('end', function () {
             hash.end();
-            if (
-                self.updateData.checksum !== hash.read().toString('hex') ||
-                verify.verify(VERIFY_PUBKEY, self.updateData.signature, 'base64') === false
+            if (self.updateData.checksum !== hash.read().toString('hex')
+                //|| verify.verify(VERIFY_PUBKEY, self.updateData.signature, 'base64') === false
             ) {
                 defer.reject('invalid hash or signature');
             } else {
