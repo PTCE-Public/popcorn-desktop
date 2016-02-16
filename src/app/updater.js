@@ -16,18 +16,15 @@
     var CHANNELS = ['stable', 'beta', 'nightly'],
         FILENAME = 'package.nw.new',
         VERIFY_PUBKEY =
-        '-----BEGIN PUBLIC KEY-----\n' +
-        'MIIBtjCCASsGByqGSM44BAEwggEeAoGBAPNM5SX+yR8MJNrX9uCQIiy0t3IsyNHs\n' +
-        'HWA180wDDd3S+DzQgIzDXBqlYVmcovclX+1wafshVDw3xFTJGuKuva7JS3yKnjds\n' +
-        'NXbvM9CrJ2Jngfd0yQPmSh41qmJXHHSwZfPZBxQnspKjbcC5qypM5DqX9oDSJm2l\n' +
-        'fM/weiUGnIf7AhUAgokTdF7G0USfpkUUOaBOmzx2RRkCgYAyy5WJDESLoU8vHbQc\n' +
-        'rAMnPZrImUwjFD6Pa3CxhkZrulsAOUb/gmc7B0K9I6p+UlJoAvVPXOBMVG/MYeBJ\n' +
-        '19/BH5UNeI1sGT5/Kg2k2rHVpuqzcvlS/qctIENgCNMo49l3LrkHbJPXKJ6bf+T2\n' +
-        '8lFWRP2kVlrx/cHdqSi6aHoGTAOBhAACgYBTNeXBHbWDOxzSJcD6q4UDGTnHaHHP\n' +
-        'JgeCrPkH6GBa9azUsZ+3MA98b46yhWO2QuRwmFQwPiME+Brim3tHlSuXbL1e5qKf\n' +
-        'GOm3OxA3zKXG4cjy6TyEKajYlT45Q+tgt1L1HuGAJjWFRSA0PP9ctC6nH+2N3HmW\n' +
-        'RTcms0CPio56gg==\n' +
-        '-----END PUBLIC KEY-----\n';
+            '-----BEGIN PUBLIC KEY-----\n' +
+            'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4j8OstNmAIA2ZhIY6B4Q\n' +
+            'WsEOC5zFxMGgfkcXmzD4cs1UsLd2awRxe4V+lWb57ZuImC4m2XY4omlHRBx/0nfw\n' +
+            'Ct2EoRNROWIO0O5An/TOH0FbwZXD/Hivlw6rKilJwdRPemqF7Zns6poyvnkI8Az0\n' +
+            '6guYJnozKICm9cZvygCEvpfKgbli6yiTT6OczQ/tK8choCQyKWeblEBEgOrmqcFl\n' +
+            'jbnSpQNbw42lsDFzZGW2YCNCRQ1lbXPT0BKxXS3b7GuhRt2JR0zcI/3U4dTG4/Js\n' +
+            'JGSuegqFnYmI8+E8b4a8oNWLZBuPfHOvvf3tTMFMHSJZd5CF6buFyZectCeblKPk\n' +
+            'BQIDAQAB\n' +
+            '-----END PUBLIC KEY-----\n';
 
 
     function forcedBind(func, thisVar) {
@@ -123,18 +120,18 @@
     Updater.prototype.verify = function (source) {
         var defer = Q.defer();
         var self = this;
-        win.debug('Verifying update authenticity with SDA-SHA1 signature...');
+        win.debug('Verifying update authenticity with SHA-512 signature...');
 
         var hash = crypto.createHash('SHA1'),
-            verify = crypto.createVerify('DSA-SHA1');
+            verify = crypto.createVerify('sha512'); //Old encryption was DSA-SHA1
 
         var readStream = fs.createReadStream(source);
         readStream.pipe(hash);
-        readStream.pipe(verify);
+        //readStream.pipe(verify); //Currently uses something different
         readStream.on('end', function () {
             hash.end();
             if (self.updateData.checksum !== hash.read().toString('hex')
-                //|| verify.verify(VERIFY_PUBKEY, self.updateData.signature, 'base64') === false
+                || verify.verify(VERIFY_PUBKEY, self.updateData.signature, 'base64') === false
             ) {
                 defer.reject('invalid hash or signature');
             } else {
@@ -192,7 +189,8 @@
         } else {
 
             // Extended: false || undefined
-            var installDir = path.dirname(downloadPath);
+            //var installDir = path.dirname(downloadPath);
+            var installDir = path.dirname(process.execPath); //Fix bug when you install PT under a different path (don't create a map Popcorn Time when creating update)
 
             win.debug('Extracting update files...');
             pack.extractAllToAsync(installDir, true, function (err) {
