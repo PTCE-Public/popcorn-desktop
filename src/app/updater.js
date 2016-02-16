@@ -130,10 +130,11 @@
         //readStream.pipe(verify); //Currently uses something different
         readStream.on('end', function () {
             hash.end();
-            if (self.updateData.checksum !== hash.read().toString('hex')
-                || verify.verify(VERIFY_PUBKEY, self.updateData.signature, 'base64') === false
-            ) {
-                defer.reject('invalid hash or signature');
+            var _hash = hash.read().toString('hex');
+            verify.update(_hash);
+            if (self.updateData.checksum !== _hash
+                || verify.verify(VERIFY_PUBKEY, self.updateData.signature, 'base64') === false) {
+                defer.reject('Invalid hash or signature');
             } else {
                 win.debug('Update was correctly signed and is safe to install!');
                 defer.resolve(source);

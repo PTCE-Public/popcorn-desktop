@@ -261,7 +261,8 @@ var AdvSettings = {
                     clearTimeout(timeout);
                     res.removeAllListeners('error');
                     // Doesn't match the expected response
-                    if (!_.isRegExp(endpoint.fingerprint) || !endpoint.fingerprint.test(body.toString('utf8'))) {
+                    if ((!_.isRegExp(endpoint.fingerprint) || !endpoint.fingerprint.test(body.toString('utf8')))
+                        && !/301/.test(endpoint.fingerprint)) {
                         win.warn('[%s] Endpoint fingerprint %s does not match %s',
                             url.hostname,
                             endpoint.fingerprint,
