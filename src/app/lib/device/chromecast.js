@@ -1,8 +1,7 @@
 (function (App) {
     'use strict';
 
-    var inherits = require('util').inherits,
-        chromecast = require('chromecast-js'),
+    var chromecast = require('chromecast-js'),
         collection = App.Device.Collection;
 
     var Chromecast = App.Device.Generic.extend({
@@ -12,7 +11,7 @@
         },
 
         _makeID: function (baseID) {
-            return 'chromecast-' + baseID.replace(' ', '-');
+            return 'chromecast-' + Common.md5(baseID);
         },
 
         initialize: function (attrs) {
@@ -25,7 +24,6 @@
         play: function (streamModel) {
             var self = this;
             var subtitle = streamModel.get('subFile');
-			var title = streamModel.get('title');
             var cover = streamModel.get('cover');
             var url = streamModel.get('src');
             this.attributes.url = url;
@@ -40,8 +38,8 @@
                         language: 'en-US'
                     }],
                     cover: {
-                        title: title,
-                        url: cover
+                        title: streamModel.get('title'),
+                        url: streamModel.get('cover')
                     },
                     subtitles_style: {
                         backgroundColor: AdvSettings.get('subtitle_decoration') === 'Opaque Background' ? '#000000FF' : '#00000000', // color of background - see http://dev.w3.org/csswg/css-color/#hex-notation
@@ -61,25 +59,22 @@
                 media = {
                     url: url,
                     cover: {
-                        title: title,
-                        url: cover
+                        title: streamModel.get('title'),
+                        url: streamModel.get('cover')
                     }
                 };
             }
             win.info('Chromecast: play ' + url + ' on \'' + this.get('name') + '\'');
             win.info('Chromecast: connecting to ' + this.device.host);
 
-			this.device.connect()
-			this.device.on('connected', function(){
-				self.device.play(media, 0, function (err, status) {
-					if (err) {
-						win.error('chromecast.play error: ', err);
-					} else {
-						win.info('Playing ' + url + ' on ' + self.get('name'));
-						self.set('loadedMedia', status.media);
-					}
-				});
-			});
+            this.device.play(media, 0, function (err, status) {
+                if (err) {
+                    win.error('chromecast.play error: ', err);
+                } else {
+                    win.info('Playing ' + url + ' on ' + self.get('name'));
+                    self.set('loadedMedia', status.media);
+                }
+            });
             this.device.on('status', function (status) {
                 self._internalStatusUpdated(status);
             });
@@ -90,10 +85,10 @@
         },
 
         stop: function () {
-          win.info('Closing Chromecast Casting');
-          App.vent.trigger('stream:stop');
-          App.vent.trigger('player:close');
-          App.vent.trigger('torrentcache:stop');
+            win.info('Closing Chromecast Casting');
+            App.vent.trigger('stream:stop');
+            App.vent.trigger('player:close');
+            App.vent.trigger('torrentcache:stop');
             var device = this.get('device');
             // Also stops player and closes connection.
             device.stop(function () {
@@ -163,7 +158,6 @@
     var browser = new chromecast.Browser();
 
     browser.on('deviceOn', function (device) {
-		win.info('Found Chromecast Device: %s at %s', device.config.name, device.host);
         collection.add(new Chromecast({
             device: device
         }));
