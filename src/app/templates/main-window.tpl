@@ -26,9 +26,15 @@
     <div class="modal-content">
         <div class="modal-body">
             <center>
+                <br />
                 <img src="http://i.imgur.com/HV8Sos8.png" class="img-responsive" object-fit:"contain" >
-                <strong>3HowmzTcd3W8b5biGPzV584V3zhsThjt3M</strong>
+                <br />
+                <code style="font-size:18px; padding-left:5px;padding-right:5px; color:#7B7B7B; background-color:#DBDBDB;">3HowmzTcd3W8b5biGPzV584V3zhsThjt3M</code>
+                <br />
             </center>
+        </div>
+        <div class="modal-footer">
+        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
         </div>
     </div>
 </div>
