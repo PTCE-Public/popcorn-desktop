@@ -110,7 +110,7 @@
 
         function get(index) {
             var options = {
-                url: Settings.movieAPI[index].url + 'api/v2/list_movies.json',
+                url: Settings.movieAPI[index].url + 'api/v2/list_movies_pct.json',
                 qs: params,
                 json: true,
                 timeout: 10000
