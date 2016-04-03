@@ -94,6 +94,12 @@ Settings.vpnUsername = '';
 Settings.vpnPassword = '';
 
 Settings.movieAPI = [{
+    url: 'https://yts.popcorntimece.ch/',
+    strictSSL: true
+},{
+    url: 'https://movies.api-fetch.website/',
+    strictSSL: true
+},{
     url: 'https://yts.ag/',
     strictSSL: true
 },{
@@ -102,6 +108,9 @@ Settings.movieAPI = [{
 }];
 
 Settings.tvAPI = [{
+    url: 'https://popcorntimece.ch/api/v2/',
+    strictSSL: true
+},{
     url: 'https://popcorntime.ws/api/eztv/',
     strictSSL: true
 },{
@@ -117,7 +126,7 @@ Settings.updateEndpoint = {
     index: 0,
     proxies: [{
         url: 'https://popcorntimece.ch/',
-        fingerprint: '4A:8C:A4:F9:0E:2C:1F:D3:D3:92:42:F5:3E:46:96:C9:5A:7C:E2:0B',
+        fingerprint: '51:5D:47:FB:34:BC:A5:C0:4B:01:1D:DE:81:59:41:AF:43:AB:6B:3A',
     }, {
         url: 'http://popcorntimece.ch/',
         ssl: false,
