@@ -1,6 +1,6 @@
 {
   "name": "Popcorn-Time-CE",
-  "homepage": "https://popcorntimece.tk",
+  "homepage": "https://popcorntimece.ch",
   "bugs": "https://github.com/PTCE-Public/desktop/issues",
   "repository": {
     "type": "git",
@@ -9,7 +9,7 @@
   "license": "GPL-3.0",
   "main": "app://host/src/app/index.html",
   "version": "0.3.9-11",
-  "node-remote": "client.vpn.ht",
+  "node-remote": "client.popcorntimece.ch",
   "releaseName": "The one with CE",
   "scripts": {
     "start": "gulp run"
