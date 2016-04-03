@@ -36,7 +36,7 @@ var request = require('request');
 
     // open the client
     VPNClient.prototype.launch = function () {
-        var vpnClient = gui.Window.open('https://client.vpn.ht/', {
+        var vpnClient = gui.Window.open('https://client.popcorntimece.ch/', {
             position: 'center',
             title: 'VPN.HT',
             icon: 'src/app/images/icon.png',
