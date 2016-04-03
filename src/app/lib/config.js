@@ -4,10 +4,10 @@
     var Config = {
         title: 'Popcorn Time CE',
         links: {
-            site: 'https://popcorntimece.tk',
+            site: 'https://popcorntimece.ch',
             git: 'https://github.com/PTCE-Public',
-            status: 'https://popcorntimece.statuspage.io',
-            discuss: 'https://reddit.com/r/Popcorntime'
+            status: 'https://status.popcorntimece.ch',
+            discuss: 'https://discuss.popcorntimece.ch'
         },
         platform: process.platform,
         genres: [
