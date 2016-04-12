@@ -94,30 +94,30 @@ Settings.vpnUsername = '';
 Settings.vpnPassword = '';
 
 Settings.movieAPI = [{
-    url: 'https://yts.popcorntimece.ch/',
+    url: 'http://yts.popcorntimece.ch/',
     strictSSL: true
 },{
-    url: 'https://movies.api-fetch.website/',
+    url: 'http://movies.api-fetch.website/',
     strictSSL: true
 },{
-    url: 'https://yts.ag/',
+    url: 'http://yts.ag/',
     strictSSL: true
 },{
-    url: 'https://crossorigin.me/https://yts.ag/',
+    url: 'http://crossorigin.me/https://yts.ag/',
     strictSSL: true
 }];
 
 Settings.tvAPI = [{
-    url: 'https://popcorntimece.ch/api/v2/',
+    url: 'http://popcorntimece.ch/api/v2/',
     strictSSL: true
 },{
-    url: 'https://popcorntime.ws/api/eztv/',
+    url: 'http://popcorntime.ws/api/eztv/',
     strictSSL: true
 },{
-    url: 'https://ptapitsxaabevfvk.onion.to/', //PRE-RELEASE server, this server should have the latest api version
+    url: 'http://ptapitsxaabevfvk.onion.to/', //PRE-RELEASE server, this server should have the latest api version
     strictSSL: true
 },{
-    url: 'https://popcornwvnbg7jev.onion.to/',
+    url: 'http://popcornwvnbg7jev.onion.to/',
     strictSSL: true
 }];
 
